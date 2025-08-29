@@ -120,3 +120,34 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Стили для тостов */
+.toaster [data-sonner-toast][data-type="success"] {
+  background: hsl(142, 76%, 94%) !important;
+  border: 1px solid hsl(142, 76%, 84%) !important;
+  color: hsl(142, 76%, 20%) !important;
+}
+
+.toaster [data-sonner-toast][data-type="success"] [data-icon] {
+  color: hsl(142, 76%, 36%) !important;
+}
+
+.toaster [data-sonner-toast][data-type="error"] {
+  background: hsl(0, 84%, 96%) !important;
+  border: 1px solid hsl(0, 84%, 86%) !important;
+  color: hsl(0, 84%, 20%) !important;
+}
+
+.toaster [data-sonner-toast][data-type="error"] [data-icon] {
+  color: hsl(0, 84%, 36%) !important;
+}
+
+.toaster [data-sonner-toast][data-type="info"] {
+  background: hsl(214, 95%, 96%) !important;
+  border: 1px solid hsl(214, 95%, 86%) !important;
+  color: hsl(214, 95%, 20%) !important;
+}
+
+.toaster [data-sonner-toast][data-type="info"] [data-icon] {
+  color: hsl(214, 95%, 36%) !important;
+}

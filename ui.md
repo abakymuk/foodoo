@@ -1,6 +1,6 @@
 "use client";
 
-import type * as React from "react";
+import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
@@ -11,9 +11,6 @@ import {
   Settings2,
 } from "lucide-react";
 
-import { NavMain } from "@/components/nav-main";
-import { NavUser } from "@/components/nav-user";
-import { SidebarThemeToggle } from "@/components/sidebar-theme-toggle";
 import {
   Sidebar,
   SidebarContent,
@@ -23,6 +20,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { NavMain } from "@/components/nav-main";
+import { NavUser } from "@/components/nav-user";
+import { SidebarThemeToggle } from "@/components/sidebar-theme-toggle";
 
 // Props для гибкости: прогресс онбординга и флаг тест-режима
 type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
@@ -30,7 +30,7 @@ type AppSidebarProps = React.ComponentProps<typeof Sidebar> & {
   orgSubtitle?: string;
   setupProgress?: number; // 0..100
   testMode?: boolean;
-  user?: { name: string; email: string; avatar: string } | null;
+  user?: { name: string; email: string; avatar?: string };
 };
 
 export function AppSidebar({
@@ -38,7 +38,11 @@ export function AppSidebar({
   orgSubtitle = "My Restaurant",
   setupProgress = 0,
   testMode = true,
-  user = null,
+  user = {
+    name: "Vlad Ovelian",
+    email: "vlad@yahoo.com",
+    avatar: "/bearded-man-face-photo.png",
+  },
   ...props
 }: AppSidebarProps) {
   const pathname = usePathname();
@@ -68,7 +72,8 @@ export function AppSidebar({
         // { title: "Modifiers", url: "/app/menu/modifiers" },
       ],
       isActive:
-        isActive(pathname, "/app/menu") || pathname.startsWith("/app/menu/"),
+        isActive(pathname, "/app/menu") ||
+        pathname.startsWith("/app/menu/"),
     },
     {
       title: "Settings",
@@ -110,7 +115,9 @@ export function AppSidebar({
             <SidebarMenuItem>
               <div className="rounded-lg border p-3">
                 <div className="mb-2 flex items-center justify-between">
-                  <span className="text-xs font-medium">Finish setup</span>
+                  <span className="text-xs font-medium">
+                    Finish setup
+                  </span>
                   <span className="text-xs tabular-nums">
                     {Math.max(0, Math.min(100, setupProgress))}%
                   </span>
@@ -122,7 +129,10 @@ export function AppSidebar({
                   <div
                     className="h-full w-0 rounded bg-foreground transition-[width] duration-300"
                     style={{
-                      width: `${Math.max(0, Math.min(100, setupProgress))}%`,
+                      width: `${Math.max(
+                        0,
+                        Math.min(100, setupProgress)
+                      )}%`,
                     }}
                   />
                 </div>
@@ -161,3 +171,11 @@ function isActive(pathname: string | null, url: string) {
   }
   return pathname === url || pathname.startsWith(url + "/");
 }
+
+что поменялось и почему
+	•	Навигация урезана до нужного минимума (не отвлекаем пользователя от первичного флоу).
+	•	Активные пункты считаются от usePathname() → корректная подсветка и aria для доступности.
+	•	Прогресс онбординга встроен в шапку сайдбара: видно сразу, и есть CTA «Continue onboarding».
+	•	Test Mode pill у бренда — всегда понятно, что сейчас тестовая среда.
+	•	Next <Link> вместо <a> — корретный SPA-переход и префетч.
+

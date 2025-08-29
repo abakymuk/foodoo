@@ -1,11 +1,12 @@
-import { LoginForm } from "@/components/login-form"
+import { redirect } from "next/navigation";
+import { getSession } from "@/lib/auth/server";
 
-export default function Home() {
-  return (
-    <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
-      <div className="w-full max-w-sm">
-        <LoginForm />
-      </div>
-    </div>
-  )
+export default async function Home() {
+  const { session } = await getSession();
+
+  if (session) {
+    redirect("/app");
+  } else {
+    redirect("/sign-in");
+  }
 }
