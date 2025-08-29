@@ -9,6 +9,8 @@ import {
   ShoppingBasket,
   ReceiptText,
   Settings2,
+  Building2,
+  Palette,
 } from "lucide-react";
 
 import { NavMain } from "@/components/nav-main";
@@ -69,6 +71,18 @@ export function AppSidebar({
       ],
       isActive:
         isActive(pathname, "/app/menu") || pathname.startsWith("/app/menu/"),
+    },
+    {
+      title: "Modifiers",
+      url: "/app/modifiers",
+      icon: Palette,
+      isActive: isActive(pathname, "/app/modifiers"),
+    },
+    {
+      title: "Brands",
+      url: "/app/brands",
+      icon: Building2,
+      isActive: isActive(pathname, "/app/brands"),
     },
     {
       title: "Settings",
